@@ -1,8 +1,9 @@
+//go:build ignore
+
 package main
 
 import (
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/bitfield/script"
@@ -18,7 +19,7 @@ func main() {
 		//})
 		script.File("servers.txt").FilterLine(func(url string) string {
 			ip, _ := script.Exec(fmt.Sprintf("dig +short %s", url)).First(1).String()
-			return strings.TrimSpace(ip)
+			return fmt.Sprintf("[%v] %s -> %s", time.Now(), url, ip)
 		}).Stdout()
 
 		// idea - get ip rout get default and arp -n on a container which could timeout
